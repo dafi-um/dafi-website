@@ -1,21 +1,20 @@
 from django.contrib import admin
 
-from .models import Year, Subject, Room
+from . import models
 
 
-class YearAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'groups', 'subgroups')
+@admin.register(models.Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'year', 'subgroups', 'delegate')
+    list_filter = ['year', 'subgroups']
 
 
-class SubjectAdmin(admin.ModelAdmin):
-    list_display = ('code', 'name', 'year', 'quarter')
-    list_filter = ['year', 'quarter']
-
-
+@admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'members')
 
 
-admin.site.register(Year, YearAdmin)
-admin.site.register(Subject, SubjectAdmin)
-admin.site.register(Room, RoomAdmin)
+@admin.register(models.Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ('code', 'name', 'year', 'quarter')
+    list_filter = ['year', 'quarter']
